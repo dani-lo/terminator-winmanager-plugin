@@ -21,10 +21,22 @@ CONFIG_PROFILE_CHILD_KEY = 'child0'
 class ConfigWithPositionAndSize (Config):
     
     def __init__ (self, profile):
+        """
+        Extend Terminator module Config, add the new
+        saving functionality for terminal window size and position
+        @param profile: terminatorlib - Profile
+        """
+
         super(ConfigWithPositionAndSize, self).__init__(profile)
 
 
     def set_win_size_pos (self, w, h, position):
+        """
+        Write new w, h and position to active profile settings
+        @param w: number
+        @param h: number
+        @param position: number
+        """
 
         new_size_list = [w,h]
 
@@ -39,6 +51,7 @@ class WinManager(plugin.MenuItem):
     capabilities = ['terminal_menu']
 
     def __init__(self):
+
         self.plugin_name = self.__class__.__name__
     
     def callback(self, menuitems, menu, terminal):
@@ -48,6 +61,7 @@ class WinManager(plugin.MenuItem):
         @param menu: GTK menu instance
         @param terminal Terminal class instance pased from erminator
         """
+
         plugin_menu_item = Gtk.MenuItem(CONFIG_DISPLAY_NAME)
         plugin_submenu = Gtk.Menu()
 
@@ -80,6 +94,7 @@ class WinManager(plugin.MenuItem):
         @param _: full menu item; not used
         @param terminal: The terminal this context menu item belongs to.
         """
+
         alloc = terminal.terminalbox.get_allocation()
 
         current_profile_name =  terminal.config.get_profile()
@@ -92,4 +107,4 @@ class WinManager(plugin.MenuItem):
         new_position = current_layout[CONFIG_PROFILE_CHILD_KEY]['position']
 
         config_editor.set_win_size_pos(new_width, new_height, new_position)
-
+        
